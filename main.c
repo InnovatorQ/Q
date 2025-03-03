@@ -241,6 +241,99 @@ void refund_ticket()
     printf("未找到该订单！ \n");
 }
 
+
+//客户资料查询
+void query_customer()
+{
+    char target_id[20];
+    char target_name[30];
+    int choice;
+
+    printf("\n-----客户资料查询-----\n")；
+    printf("1.按证件号查询\n");
+    printf("2.按姓名查询\n");
+    printf("请选择查询方式：");
+    scanf("%d",&choice);
+
+    if (choice == 1) {
+        printf("\n输入客户证件号: ");
+        scanf("%s", target_id);
+        for (int i = 0; i < order_count; i++) {
+            if (strcmp(orders[i].cline_id, target_id) == 0) {
+                printf("\n客户姓名: %s\n", orders[i].cline_name);
+                printf("证件号: %s\n", orders[i].cline_id);
+                printf("订单编号: %s\n", orders[i].order_id);
+                printf("所购航班号: %s\n", orders[i].flight_id);
+                printf("订票数量: %d\n", orders[i].tickets_num);
+                return;
+            }
+        }
+        printf("未找到该客户！\n");
+    } else if (choice == 2) {
+        printf("\n输入客户姓名: ");
+        scanf("%s", target_name);
+        for (int i = 0; i < order_count; i++) {
+            if (strcmp(orders[i].cline_name, target_name) == 0) {
+                printf("\n客户姓名: %s\n", orders[i].cline_name);
+                printf("证件号: %s\n", orders[i].cline_id);
+                printf("订单编号: %s\n", orders[i].order_id);
+                printf("所购航班号: %s\n", orders[i].flight_id);
+                printf("订票数量: %d\n", orders[i].tickets_num);
+                return;
+            }
+        }
+        printf("未找到该客户！\n");
+    } else {
+        printf("无效输入！\n");
+    }
+}
+
+//订单查询功能
+void query_order()
+{
+    char target_order_id[15];
+    char target_c_id[20];
+    int choice;
+
+    printf("\n----- 订单查询 -----\n");
+    printf("1. 按订单编号查询\n");
+    printf("2. 按客户证件号查询\n");
+    printf("请选择查询方式: ");
+    scanf("%d", &choice);
+
+    if (choice == 1) {
+        printf("\n输入订单编号: ");
+        scanf("%s", target_order_id);
+        for (int i = 0; i < order_count; i++) {
+            if (strcmp(orders[i].order_id, target_order_id) == 0) {
+                printf("\n订单编号: %s\n", orders[i].order_id);
+                printf("客户姓名: %s\n", orders[i].cline_name);
+                printf("客户证件号: %s\n", orders[i].cline_id);
+                printf("所购航班号: %s\n", orders[i].flight_id);
+                printf("订票数量: %d\n", orders[i].tickets_num);
+                return;
+            }
+        }
+        printf("未找到该订单！\n");
+    } else if (choice == 2) {
+        printf("\n输入客户证件号: ");
+        scanf("%s", target_c_id);
+        printf("\n以下是该客户的订单信息：\n");
+        for (int i = 0; i < order_count; i++) {
+            if (strcmp(orders[i].cline_id, target_c_id) == 0) {
+                printf("\n订单编号: %s\n", orders[i].order_id);
+                printf("客户姓名: %s\n", orders[i].cline_name);
+                printf("客户证件号: %s\n", orders[i].cline_id);
+                printf("所购航班号: %s\n", orders[i].flight_id);
+                printf("订票数量: %d\n", orders[i].tickets_num);
+                return;
+            }
+        }
+        printf("未找到该客户的订单！\n");
+    } else {
+        printf("无效输入！\n");
+    }
+}
 int main()
 {
     int choice;
@@ -256,7 +349,9 @@ int main()
             case 4: load_flights(); break;
             case 5: query_by_id(); break;
             case 6: book_ticket(); break;
-            case 7: refund_ticket();break;
+            case 7: refund_ticket(); break;
+            case 8: query_customer(); break;
+            case 9: query_order(); break;
             // 其他功能实现...
             case 0: save_flights(); break; // 退出前保存
         }

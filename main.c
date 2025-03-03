@@ -162,7 +162,26 @@ void book_ticket()
         if(strcmp(flight_id,flights[i].flight_id) == 0){
             if(flights[i].available_seats <= 0){
                 printf("该航班以无余票！\n");
-
+                printf("为您推荐以下有余票的航班：\n");
+                int found = 0;
+                for (int j = 0; j < flight_count; j++) {
+                    if (flights[j].available_seats > 0) {
+                        // 推荐条件：目的地相同，或者出发城市相同
+                        if (strcmp(flights[i].depart_city, flights[j].depart_city) == 0 || 
+                            strcmp(flights[i].arrive_city, flights[j].arrive_city) == 0) {
+                            printf("航班号：%s， 出发城市：%s， 到达城市：%s， 余票：%d， 票价：%.2f\n",
+                                   flights[j].flight_id,
+                                   flights[j].depart_city,
+                                   flights[j].arrive_city,
+                                   flights[j].available_seats,
+                                   flights[j].price * flights[j].discount);
+                            found = 1;
+                        }
+                    }
+                }
+                if (!found) {
+                    printf("抱歉，当前没有符合推荐条件的航班。\n");
+                }//推荐其他航班
                 return;
             }
             printf("当前余票：%d\n",flights[i].available_seats);
